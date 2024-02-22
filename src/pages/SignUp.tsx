@@ -1,7 +1,15 @@
+import RegistrationForm from "../component/RegistrationForm";
+
+
+
 const SignUp = () => {
   return (
-    <div>SignUp</div>
-  )
+    <div className="flex h-screen">
+      <div className="m-auto">
+        <RegistrationForm />
+      </div>
+    </div>
+  );
 }
 
 export default SignUp
