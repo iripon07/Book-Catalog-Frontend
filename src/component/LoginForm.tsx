@@ -2,24 +2,24 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 
-interface ISignUpFormValues {
-  name: string;
+interface ILoginFormValues {
   email: string;
   password: string;
-  address: string;
 }
 
-const RegistrationForm = () => {
-    const {
-    register,
-    handleSubmit,
-    // reset,
-    formState: { errors },
-  } = useForm();
+const LoginForm = () => {
+        const {
+          register,
+          handleSubmit,
+          // reset,
+          formState: { errors },
+        } = useForm();
 
-   const onSubmit = (data: ISignUpFormValues) => {
-     console.log(data, "user information!");
-   };
+        const onSubmit = (data:ILoginFormValues) => {
+            console.log(data, "user information!");
+        }
+
+
 
   return (
     <>
@@ -28,27 +28,7 @@ const RegistrationForm = () => {
           Sign Up
         </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex justify-center items-center mb-4">
-            <label className="form-control w-full max-w-xs">
-              <h6 className="text-xl text-gray-500">Name</h6>
-              <input
-                type="text"
-                id="name"
-                placeholder="Enter your name"
-                className="input input-bordered w-full max-w-xs"
-                {...register("name", {
-                  required: "Name is required",
-                })}
-              />
-              {errors.name ? (
-                <span className="text-red-900">
-                  {errors.name.message?.toString()}
-                </span>
-              ) : (
-                <></>
-              )}
-            </label>
-          </div>
+         
 
           <div className="flex justify-center items-center mb-4">
             <label className="form-control w-full max-w-xs">
@@ -95,27 +75,6 @@ const RegistrationForm = () => {
             </label>
           </div>
 
-          <div className="flex justify-center items-center mb-4">
-            <label className="form-control w-full max-w-xs">
-              <h6 className="text-xl text-gray-500">Address</h6>
-              <input
-                type="text"
-                placeholder="Enter your password"
-                id="address"
-                className="input input-bordered w-full max-w-xs"
-                {...register("address", {
-                  required: "Address is required",
-                })}
-              />
-              {errors?.address ? (
-                <span className="text-red-900">
-                  {errors?.address?.message?.toString()}
-                </span>
-              ) : (
-                <></>
-              )}
-            </label>
-          </div>
           <div className="card-actions flex justify-center items-center ">
             <button className="btn btn-primary text-white text-xl uppercase width-full">
               submit
@@ -124,17 +83,17 @@ const RegistrationForm = () => {
         </form>
         <div className="flex justify-between px-4 items-center">
           <p>
-            <small className="text-gray-400">Already have an account?</small>
+            <small className="text-gray-400">New to Book Shelf?</small>
           </p>
           <Link to="/login">
             <small className="text-green-400 hover:text-primary">
-              Please login
+              Create an account
             </small>
           </Link>
         </div>
       </div>
     </>
   );
-};
+}
 
-export default RegistrationForm;
+export default LoginForm
