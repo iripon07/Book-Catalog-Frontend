@@ -1,7 +1,4 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-
-
 interface ISignUpFormValues {
   name: string;
   email: string;
@@ -9,24 +6,21 @@ interface ISignUpFormValues {
   address: string;
 }
 
-const RegistrationForm = () => {
-    const {
+const RegistrationForm:React.FC = () => {
+  const {
     register,
     handleSubmit,
     // reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<ISignUpFormValues>();
 
-   const onSubmit = (data: ISignUpFormValues) => {
-     console.log(data, "user information!");
-   };
+  const onSubmit = (data: ISignUpFormValues) => {
+    console.log(data, "user information!");
+  };
 
   return (
     <>
-      <div className="card w-96 bg-base-100 shadow-xl py-4">
-        <h1 className="text-4xl font-bold text-primary text-center p-4 uppercase">
-          Sign Up
-        </h1>
+     
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex justify-center items-center mb-4">
             <label className="form-control w-full max-w-xs">
@@ -40,13 +34,16 @@ const RegistrationForm = () => {
                   required: "Name is required",
                 })}
               />
-              {errors.name ? (
-                <span className="text-red-900">
-                  {errors.name.message?.toString()}
-                </span>
-              ) : (
-                <></>
-              )}
+
+              <div className="label">
+                {errors.name ? (
+                  <span className="text-red-900">
+                    {errors.name.message?.toString()}
+                  </span>
+                ) : (
+                  <></>
+                )}
+              </div>
             </label>
           </div>
 
@@ -122,17 +119,7 @@ const RegistrationForm = () => {
             </button>
           </div>
         </form>
-        <div className="flex justify-between px-4 items-center">
-          <p>
-            <small className="text-gray-400">Already have an account?</small>
-          </p>
-          <Link to="/login">
-            <small className="text-green-400 hover:text-primary">
-              Please login
-            </small>
-          </Link>
-        </div>
-      </div>
+       
     </>
   );
 };

@@ -1,8 +1,25 @@
+import { Link } from "react-router-dom";
+
 const Login = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       <div className="m-auto">
-        <Login />
+        <div className="card w-96 bg-base-100 shadow-xl py-4">
+          <h1 className="text-4xl font-bold text-primary text-center p-4 uppercase">
+            login
+          </h1>
+          <Login />
+          <div className="flex justify-between px-4 items-center">
+            <p>
+              <small className="text-gray-400">New to Book Shelf?</small>
+            </p>
+            <Link to="/login">
+              <small className="text-green-400 hover:text-primary">
+                Create an account
+              </small>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
