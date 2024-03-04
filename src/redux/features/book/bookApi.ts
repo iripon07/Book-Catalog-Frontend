@@ -1,21 +1,20 @@
-import { SearchData } from "../../../types";
-import { apiSlice } from "../../api/apiSlice";
+import { api } from "../../api/api";
 
-const bookApi = apiSlice.injectEndpoints({
+const bookApi = api.injectEndpoints({
   endpoints: (build) => ({
+    postBook: build.mutation({
+      query: (data) => ({
+        url: `/books/create-book`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags:["book"]
+    }),
     getAllBooks: build.query({
-      query: ({
-        page,
-        limit,
-        sortBy,
-        sortOrder,
-        searchTerm,
-        exactSearch,
-        matchSearch,
-      }: SearchData) =>
-        `/book/get-all-books?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&searchTerm=${matchSearch}&${searchTerm}=${exactSearch}`,
+      query: () => '/books/all-books',
+      providesTags:['book']
     }),
   }),
 });
 
-export const { useGetAllBooksQuery } = bookApi;
+export const { usePostBookMutation,useGetAllBooksQuery } = bookApi;

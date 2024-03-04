@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
@@ -5,7 +6,9 @@ const Navbar = () => {
     <>
       <nav className="navbar max-w-screen-xl mx-auto">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">BookShelf</a>
+          <Link to="/">
+            <a className="btn btn-ghost text-xl">BookShelf</a>
+          </Link>
         </div>
         <div className="flex-none">
           <div className="dropdown dropdown-end">
@@ -65,16 +68,24 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
+                <Link to="/my-profile">
+                  <a className="justify-between">Profile</a>
+                </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/login">
+                  <a>Login</a>
+                </Link>
               </li>
               <li>
-                <a>Logout</a>
+                <Link to="/logout">
+                  <a>Logout</a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/signup">
+                  <a>Singup</a>
+                </Link>
               </li>
             </ul>
           </div>

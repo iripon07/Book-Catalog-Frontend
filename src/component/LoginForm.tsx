@@ -6,7 +6,7 @@ interface ILoginFormValues {
   password: string;
 }
 
-const LoginForm:React.FC = () => {
+const LoginForm = () => {
         const {
           register,
           handleSubmit,

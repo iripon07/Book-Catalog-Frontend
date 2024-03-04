@@ -6,7 +6,7 @@ interface ISignUpFormValues {
   address: string;
 }
 
-const RegistrationForm:React.FC = () => {
+const RegistrationForm = () => {
   const {
     register,
     handleSubmit,
