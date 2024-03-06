@@ -1,5 +1,7 @@
 import Loading from "../Layout/Loading";
+import BookCard from "../component/BookCard";
 import { useGetAllBooksQuery } from "../redux/features/book/bookApi";
+import { IBook } from "../types/book";
 
 
 const Home = () => {
@@ -7,11 +9,12 @@ const Home = () => {
     undefined,
     { refetchOnMountOrArgChange: true, pollingInterval: 3000 }
   );
+  const books = data?.data;
 
   console.log(isLoading);
   console.log(isError);
   console.log(isSuccess);
-  console.log(data, "Book from home");
+  console.log(books, "Book from home");
 
   let content;
   if (isLoading) {
@@ -35,7 +38,13 @@ const Home = () => {
   }
   if(!isLoading && !isError && data?.data?.length > 0){
     content = (
-      <div></div>
+      <div>
+        {
+          books.map((book:IBook, index:number) => (
+            <BookCard book={book} key={index}/>
+          ))
+        }
+      </div>
     )
   }
 
