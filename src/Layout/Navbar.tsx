@@ -1,7 +1,13 @@
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/hook";
+import { useDispatch } from "react-redux";
+import { userLoggedOut } from "../redux/features/user/userSlice";
 
 const Navbar = () => {
+  const auth = useAppSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  console.log(auth, "auth checked");
   return (
     <>
       <nav className="navbar max-w-screen-xl mx-auto">
@@ -72,16 +78,20 @@ const Navbar = () => {
                   <a className="justify-between">Profile</a>
                 </Link>
               </li>
-              <li>
-                <Link to="/login">
-                  <a>Login</a>
-                </Link>
-              </li>
-              <li>
-                <Link to="/logout">
-                  <a>Logout</a>
-                </Link>
-              </li>
+
+              {auth.accessToken ? (
+                <li>
+                  <Link onClick={()=> dispatch(userLoggedOut())} to="/logout">
+                    <a>Logout</a>
+                  </Link>
+                </li>
+              ) : (
+                <li>
+                  <Link onClick={() => navigate(`/login`)} to="/login">
+                    <a>Login</a>
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link to="/signup">
                   <a>Singup</a>
@@ -93,6 +103,6 @@ const Navbar = () => {
       </nav>
     </>
   );
-}
+};
 
-export default Navbar
+export default Navbar;
