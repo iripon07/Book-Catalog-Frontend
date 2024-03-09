@@ -1,22 +1,32 @@
-// import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-// interface IToken {
-//   token: string | null;
-// }
+interface IUserState {
+  accessToken: string | null;
+  user: {
+    _id: string;
+    email: string;
+  } | null;
+}
+const initialState: IUserState = {
+  accessToken: "",
+  user: null,
+};
 
-// const initialState: IToken = {
-//   token: localStorage.getItem("accessToken"),
-// };
+const userSLice = createSlice({
+  name: "auth",
+  initialState: initialState,
+  reducers: {
+    userLoggedIn: (state, action) => {
+      (state.accessToken = action.payload.accessToken),
+        (state.user = action.payload.user);
+    },
+    userLoggedOut: (state) => {
+      (state.accessToken = null),
+        (state.user = null),
+        localStorage.removeItem("user");
+    },
+  },
+});
 
-// const userSlice = createSlice({
-//   name: "auth",
-//   initialState,
-//   reducers: {
-//     setToken
-//     // userLoggedIn: (state, action) => {
-//     //   (state.token = action.payload.token), (state.user = action.payload.token);
-//     // },
-//   },
-// });
-// export const { userLoggedIn } = userSlice.actions;
-// export default userSlice.reducer;
+export const { userLoggedIn, userLoggedOut } = userSLice.actions;
+export default userSLice.reducer;
