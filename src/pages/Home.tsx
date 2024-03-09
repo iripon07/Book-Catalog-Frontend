@@ -29,7 +29,7 @@ const Home = () => {
       </div>
     );
   }
-  if (!isLoading && !isError && data?.data?.length === 0) {
+  if (!isLoading && !isError && isSuccess&& data?.data?.length === 0) {
     content = (
       <div>
         <h1 className="text-5xl font-bold text-center">No Books Available!!!</h1>

@@ -7,7 +7,6 @@ const Navbar = () => {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(auth, "auth checked");
   return (
     <>
       <nav className="navbar max-w-screen-xl mx-auto">
