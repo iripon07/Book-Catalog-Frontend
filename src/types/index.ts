@@ -7,3 +7,12 @@ export interface SearchData {
   exactSearch: string;
   matchSearch: string;
 }
+
+export interface IBookValues {
+  title: string;
+  author: string;
+  genre: string;
+  publicationDate: Date;
+  description: string;
+  coverImage: string;
+}

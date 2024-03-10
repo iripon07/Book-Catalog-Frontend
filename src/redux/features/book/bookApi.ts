@@ -16,7 +16,7 @@ const bookApi = api.injectEndpoints({
         `books/all-books?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}&searchTerm=${searchTerm}&exactSearch=${exactSearch}&matchSearch=${matchSearch}`,
       providesTags: ["book"],
     }),
-    postBook: build.mutation({
+    addBook: build.mutation({
       query: (data) => ({
         url: `books/create-book`,
         method: "POST",
@@ -27,4 +27,4 @@ const bookApi = api.injectEndpoints({
   }),
 });
 
-export const { usePostBookMutation, useGetAllBooksQuery } = bookApi;
+export const { useAddBookMutation, useGetAllBooksQuery } = bookApi;

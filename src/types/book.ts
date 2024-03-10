@@ -13,3 +13,15 @@ export type IBook = {
   description?: string;
   _id?: string;
 };
+
+export const genres = [
+  "Fiction",
+  "Non-fiction",
+  "Sci-fi",
+  "Mystery",
+  "Thriller",
+  "Children's book",
+  "Religious",
+  "History",
+  "Biography",
+];
