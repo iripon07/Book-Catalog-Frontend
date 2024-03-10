@@ -1,12 +1,18 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { useAddBookMutation } from "../redux/features/book/bookApi";
+import { useAppSelector } from "../redux/hook";
 import { IBookValues } from "../types";
 import { genres } from "../types/book";
 
-
 const AddBookForm: React.FC = () => {
-    const [addBook, {data, isError, isLoading,isSuccess}] = useAddBookMutation()
-    console.log(data, isLoading, isError, isSuccess);
+  const { user } = useAppSelector((state) => state.auth);
+  console.log(user, 'user check');
+  const [addBook, { data, isError, isLoading, isSuccess }] =
+    useAddBookMutation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -14,11 +20,20 @@ const AddBookForm: React.FC = () => {
     reset,
   } = useForm<IBookValues>();
   const onSubmit = (data: IBookValues) => {
-    console.log(data, "Book data check");
-    addBook({title:data.title, author:data.author, genre:data.genre, publicationDate:data.publicationDate, description:data.description, coverImage:data.coverImage})
-    console.log(data, "Book data check");
-    reset();
+    const bookData = { ...data, createdBy: user?._id };
+    addBook(bookData);
   };
+
+  useEffect(() => {
+    if (!isLoading && !isError && isSuccess && data.statusCode === 200) {
+      toast.success(`Book Add successfully`);
+      navigate("/all-books");
+      reset();
+    } else if (!isLoading && isError) {
+      toast.error(`Book not added`);
+      reset();
+    }
+  }, [data, isError, isLoading, isSuccess, navigate, reset]);
 
   return (
     <>
@@ -52,6 +67,7 @@ const AddBookForm: React.FC = () => {
           <label className="form-control w-full max-w-xs">
             <h6 className="text-xl text-gray-500">Author</h6>
             <input
+              autoComplete="off"
               type="text"
               id="author"
               placeholder="Enter author"
@@ -74,12 +90,8 @@ const AddBookForm: React.FC = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center mb-4">
-          {/* <h6 className="text-xl text-gray-500">Genre</h6> */}
-          {/* <label className="label">
-            <span className="label-text">Genre</span>
-          </label> */}
           <select
-          required
+            required
             typeof="text"
             id="genre"
             className="select select-bordered w-full max-w-xs"
@@ -88,24 +100,12 @@ const AddBookForm: React.FC = () => {
             })}
           >
             <option value="">Select Genre</option>
-            {/* <option>Java</option>
-            <option>Go</option>
-            <option>C</option>
-            <option>C#</option>
-            <option>C++</option>
-            <option>Rust</option>
-            <option>JavaScript</option>
-            <option>Python</option> */}
-            {
-                genres.map((genre, index) => (
-                    <option key={index} value={genre}>{genre}</option>
-                ))
-            }
-            {/* {data?.data?.map((genre, index) => (
-              <option key={index} className="bg-accent" value={genre.genre}>
-                {genre.genre}
+
+            {genres.map((genre, index) => (
+              <option key={index} value={genre}>
+                {genre}
               </option>
-            ))} */}
+            ))}
           </select>
         </div>
 
@@ -113,6 +113,7 @@ const AddBookForm: React.FC = () => {
           <label className="form-control w-full max-w-xs">
             <h6 className="text-xl text-gray-500">Description</h6>
             <input
+              autoComplete="off"
               type="text"
               id="description"
               placeholder="Enter description"
@@ -138,6 +139,7 @@ const AddBookForm: React.FC = () => {
           <label className="form-control w-full max-w-xs">
             <h6 className="text-xl text-gray-500">Publication Date</h6>
             <input
+              autoComplete="off"
               type="date"
               id="date"
               placeholder="Enter date"
@@ -163,6 +165,7 @@ const AddBookForm: React.FC = () => {
           <label className="form-control w-full max-w-xs">
             <h6 className="text-xl text-gray-500">Image</h6>
             <input
+              autoComplete="off"
               type="text"
               id="coverImage"
               placeholder="Enter image url"
