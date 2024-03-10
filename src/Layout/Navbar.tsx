@@ -72,15 +72,16 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
+              { auth.accessToken && (
               <li>
-                <Link to="/my-profile">
-                  <a className="justify-between">Profile</a>
+                <Link to="/add-book">
+                  <a className="justify-between">Add Book</a>
                 </Link>
               </li>
-
+              ) }
               {auth.accessToken ? (
                 <li>
-                  <Link onClick={()=> dispatch(userLoggedOut())} to="/logout">
+                  <Link onClick={() => dispatch(userLoggedOut())} to="/logout">
                     <a>Logout</a>
                   </Link>
                 </li>
