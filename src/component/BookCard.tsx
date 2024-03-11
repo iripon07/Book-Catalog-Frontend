@@ -10,7 +10,7 @@ const BookCard :React.FC<BookProps> = ({ book }) => {
   const {author, title, description, coverImage, genre} = book
    const words = description.split(" ");
    const limitedDescription =
-     words.length > 50 ? `${words.slice(0, 20).join(" ")}...` : description;
+     words.length > 50 ? `${words.slice(0, 30).join(" ")}...` : description;
   return (
     <div className="card w-full shadow-xl">
       <figure className="p-2">
@@ -25,7 +25,7 @@ const BookCard :React.FC<BookProps> = ({ book }) => {
         />
       </figure>
       <div className="pl-4 pr-1">
-        <h2 className="text-2xl font-semibold text-green-600">{title}</h2>
+        <h2 className="text-2xl font-semibold text-green-600"> {title}</h2>
         <h1 className="text-lg font-semibold text-gray-600">
           Author:{" "}
           <span className="text-sm font-sans text-gray-400">{author}</span>
