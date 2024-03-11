@@ -1,4 +1,4 @@
-import Loading from "../Layout/Loading";
+import Loading from "../component/Loading";
 import BookCard from "../component/BookCard";
 import { useGetAllBooksFromDBQuery } from "../redux/features/book/bookApi";
 import { IBook } from "../types/book";
