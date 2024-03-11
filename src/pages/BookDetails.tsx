@@ -4,10 +4,22 @@ import { FaBookReader } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Loading from "../component/Loading";
 import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
+import { useState } from "react";
+import DeleteBook from "../component/DeleteBook";
 
 const BookDetails = () => {
   const { id } = useParams();
   const { data, isError, isLoading, isSuccess } = useGetSingleBookQuery(id);
+
+  const [show, setShow] = useState(false);
+  const [deleteShow, setDeleteShow] = useState(false);
+
+  const handleClose = () => setShow(false); // Fix: Wrap setShow inside a function
+  const handleShow = () => setShow(true); // Fix: Wrap setShow inside a function
+  const handleDeleteClose = () => setDeleteShow(false); // Fix: Wrap setDeleteShow inside a function
+  const handleDeleteShow = () => setDeleteShow(true); //
+
+  const book = data?.data;
 
   let content;
 
@@ -30,7 +42,7 @@ const BookDetails = () => {
         <div className="flex flex-col md:flex-row">
           <img
             className="w-auto"
-            style={{ maxHeight: "400px", maxWidth: "300px" }}
+            style={{ maxHeight: "500px", maxWidth: "500px" }}
             src={data?.data?.coverImage}
             alt={data?.data?.title}
           />
@@ -88,6 +100,7 @@ const BookDetails = () => {
                 Edit Book
               </button>
               <button
+                onClick={handleDeleteShow!}
                 className="px-4 mr-4 mt-4 py-2 flex justify-center items-center text-green-600 rounded-xl text-2xl hover:bg-green-600 hover:text-white"
                 style={{ border: `1px solid green` }}
               >
@@ -103,7 +116,19 @@ const BookDetails = () => {
     );
   }
 
-  return <div>{content}</div>;
+  return (
+    <>
+      <div>{content}</div>
+      {deleteShow && (
+        <DeleteBook
+          show={deleteShow}
+          handleClose={handleDeleteClose}
+          id={id!}
+          book={book}
+        />
+      )}
+    </>
+  );
 };
 
 export default BookDetails;
