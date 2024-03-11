@@ -13,7 +13,7 @@ const Navbar = () => {
     dispatch(removeToken());
   };
   return (
-    <div className="navbar bg-white">
+    <div className="navbar bg-white max-w-screen-xl mx-auto">
       <div className="flex-1">
         <Link to="/">
           <img className="ml-3 w-20 rounded-md" src={logo} alt="logo" />
@@ -32,13 +32,13 @@ const Navbar = () => {
                 <summary>Your info</summary>
                 <ul className="p-2 bg-white border-primary border-2 z-10">
                   <li>
-                    <Link to="/">All Book's</Link>
+                    <Link to="/all-books">All Book</Link>
                   </li>
                   <li>
-                    <Link to="/my-book">My Book's</Link>
+                    <Link to="/my-book">My Book</Link>
                   </li>
                   <li>
-                    <Link to="/add-book">Add New Book</Link>
+                    <Link to="/add-book">Add Book</Link>
                   </li>
                   <li>
                     <Link to="/my-profile">My Profile</Link>

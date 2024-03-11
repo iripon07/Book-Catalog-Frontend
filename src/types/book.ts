@@ -9,8 +9,8 @@ export type IBook = {
   genre: string;
   publicationDate: string;
   reviews: IBookReview[];
-  image?: string;
-  description?: string;
+  coverImage: string;
+  description: string;
   _id?: string;
 };
 

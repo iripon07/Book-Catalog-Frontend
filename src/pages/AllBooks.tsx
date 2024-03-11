@@ -1,37 +1,54 @@
-import { useState } from "react";
-import { useGetAllBooksQuery } from "../redux/features/book/bookApi";
-import { SearchData } from "../types";
+import Loading from "../Layout/Loading";
+import BookCard from "../component/BookCard";
+import { useGetAllBooksFromDBQuery } from "../redux/features/book/bookApi";
+import { IBook } from "../types/book";
 
 const AllBooks = () => {
-
-   const [pageNo, setPageNo] = useState(1);
-   const [genre, setGenre] = useState("");
-   const [sortBy, setSortBy] = useState("createdAt");
-   const [sortOrder, setSortOrder] = useState("desc");
-   const [limit, setLimit] = useState("10");
-   const [matchSearch, setMatchSearch] = useState("");
-
-   const searchData: SearchData = {
-     page: pageNo,
-     limit,
-     sortBy,
-     sortOrder,
-     searchTerm: genre ? "genre" : "",
-     exactSearch: genre,
-     matchSearch: matchSearch,
-   };
-  const { data, isLoading, isSuccess, isError } = useGetAllBooksQuery(
-    searchData,
+  const { data, isError, isLoading, isSuccess } = useGetAllBooksFromDBQuery(
+    undefined,
     { refetchOnMountOrArgChange: true }
   );
+
   const books = data?.data;
+  let content;
 
-  console.log(isLoading);
-  console.log(isError);
-  console.log(isSuccess);
-  console.log(books, "Book from All Books");
+  if (isLoading) {
+    content = <Loading />;
+  }
+  if (!isLoading && isError) {
+    content = (
+      <div className="flex justify-center items-center">
+        <h5 className="text-center text-red-600 font-bold">
+          Something went wrong!!!
+        </h5>
+      </div>
+    );
+  }
 
-  return <div>AllBooks: {books.length}</div>;
+  if (!isLoading && !isError && isSuccess && books.length === 0) {
+    content = (
+      <div>
+        <h1 className="text-5xl font-bold text-center">
+          No Books Available!!!
+        </h1>
+      </div>
+    );
+  }
+  if (!isLoading && !isError && books.length > 0) {
+    content = (
+      <div>
+        <div className="max-w-screen-xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-4">
+            {books.map((book: IBook, index: number) => (
+              <BookCard book={book} key={index} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return <div>{content}</div>;
 };
 
 export default AllBooks;

@@ -3,6 +3,10 @@ import { api } from "../../api/api";
 
 const bookApi = api.injectEndpoints({
   endpoints: (build) => ({
+    getAllBooksFromDB: build.query({
+      query: () => `books/all-books`,
+      providesTags: ["book"],
+    }),
     getAllBooks: build.query({
       query: ({
         page,
@@ -27,4 +31,4 @@ const bookApi = api.injectEndpoints({
   }),
 });
 
-export const { useAddBookMutation, useGetAllBooksQuery } = bookApi;
+export const {useGetAllBooksFromDBQuery, useAddBookMutation, useGetAllBooksQuery } = bookApi;

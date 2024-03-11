@@ -3,13 +3,11 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAddBookMutation } from "../redux/features/book/bookApi";
-import { useAppSelector } from "../redux/hook";
 import { IBookValues } from "../types";
 import { genres } from "../types/book";
 
 const AddBookForm: React.FC = () => {
-  const { user } = useAppSelector((state) => state.auth);
-  console.log(user, 'user check');
+
   const [addBook, { data, isError, isLoading, isSuccess }] =
     useAddBookMutation();
   const navigate = useNavigate();
@@ -20,8 +18,7 @@ const AddBookForm: React.FC = () => {
     reset,
   } = useForm<IBookValues>();
   const onSubmit = (data: IBookValues) => {
-    const bookData = { ...data, createdBy: user?._id };
-    addBook(bookData);
+    addBook(data);
   };
 
   useEffect(() => {
