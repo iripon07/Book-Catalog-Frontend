@@ -16,3 +16,12 @@ export interface IBookValues {
   description: string;
   coverImage: string;
 }
+
+export interface ILogInDataInput{
+  email:string,
+  password:string
+}
+
+// export interface IRegistrationData{
+//   name:
+// }

@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/features/user/userApi";
-import { userLoggedIn } from "../redux/features/user/userSlice";
+import { setToken } from "../redux/features/user/userSlice";
+import { useAppSelector } from "../redux/hook";
 
 interface ILoginFormValues {
   email: string;
@@ -12,6 +13,8 @@ interface ILoginFormValues {
 }
 
 const LoginForm = () => {
+  const user = useAppSelector((state) => state.user);
+  console.log(user, "USer token");
   const [login, { data, isError, isLoading, isSuccess }] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,28 +33,16 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (!isLoading && !isError && isSuccess && data.statusCode === 200) {
-      const { _id, email } = data.data.user;
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          accessToken: data.data.accessToken,
-          user: { _id, email },
-        })
-      );
-      dispatch(
-        userLoggedIn({
-          accessToken: data.data.accessToken,
-          user: { _id, email },
-        })
-      );
+      localStorage.setItem(`accessToken`, data?.data?.token);
+      dispatch(setToken(data?.data?.token));
       toast.success(`User logged in successfully`);
       reset();
       navigate("/");
     }
 
-    if(!isLoading && isError){
-      reset()
-      toast.error(`User not logged in`)
+    if (!isLoading && isError) {
+      reset();
+      toast.error(`User not logged in`);
     }
   }, [data, isError, isLoading, isSuccess, dispatch, navigate, reset]);
 

@@ -27,7 +27,6 @@ const RegistrationForm = () => {
       password: data.password,
       address: data.address,
     });
-    console.log(data, "user information!");
   };
   useEffect(() => {
     if (!isLoading && !isError && isSuccess && data.statusCode === 200) {
