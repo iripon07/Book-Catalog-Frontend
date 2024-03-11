@@ -5,12 +5,7 @@ import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
 const BookDetails = () => {
   const { id } = useParams();
   const { data, isError, isLoading, isSuccess } = useGetSingleBookQuery(id);
-  console.log(id, "book id");
-  console.log(isError, "error");
-  console.log(isLoading, "loading");
-  console.log(isSuccess, "success");
-  console.log(data, "data ");
-  console.log(useParams(), "paramas");
+
   let content;
 
   if (isLoading) {
@@ -25,6 +20,29 @@ const BookDetails = () => {
       </div>
     );
   }
+
+  if(!isLoading && !isError && isSuccess && data?.statusCode===200){
+    content = (
+      <div className="max-w-screen-xl mx-auto h-11/12">
+        <div className="card card-side bg-base-100 shadow-xl">
+          <figure>
+            <img
+              src={data?.data?.coverImage}
+              alt="Movie"
+            />
+          </figure>
+          <div className="card-body">
+            <h2 className="card-title">New movie is released!</h2>
+            <p>Click the button to watch on Jetflix app.</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Watch</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
 
   return <div>{content}</div>;
 };
