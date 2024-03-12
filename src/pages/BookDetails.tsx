@@ -1,7 +1,7 @@
 import { BiSolidPencil, BiSolidHeart } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
 import { FaBookReader } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../component/Loading";
 import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
 import { useState } from "react";
@@ -9,16 +9,22 @@ import DeleteBook from "../component/DeleteBook";
 
 const BookDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate()
   const { data, isError, isLoading, isSuccess } = useGetSingleBookQuery(id);
 
-  const [show, setShow] = useState(false);
-  const [deleteShow, setDeleteShow] = useState(false);
+  // const [show, setShow] = useState(false);
+  // const [deleteShow, setDeleteShow] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false)
+  
 
-  const handleClose = () => setShow(false); // Fix: Wrap setShow inside a function
-  const handleShow = () => setShow(true); // Fix: Wrap setShow inside a function
-  const handleDeleteClose = () => setDeleteShow(false); // Fix: Wrap setDeleteShow inside a function
-  const handleDeleteShow = () => setDeleteShow(true); //
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true); 
+  // const handleDeleteClose = () => setDeleteShow(false); 
+  // const handleDeleteShow = () => setDeleteShow(true); 
 
+  const handleEditBook =()=>{
+    navigate(`/edit-book/${id}`)
+  }
   const book = data?.data;
 
   let content;
@@ -91,6 +97,7 @@ const BookDetails = () => {
                 Wish List
               </button>
               <button
+              onClick={()=>handleEditBook()}
                 className="px-4 mr-4 mt-4 py-2 flex justify-center items-center text-green-600 rounded-xl text-2xl hover:bg-green-600 hover:text-white"
                 style={{ border: `1px solid green` }}
               >
@@ -100,7 +107,7 @@ const BookDetails = () => {
                 Edit Book
               </button>
               <button
-                onClick={handleDeleteShow!}
+                onClick={()=>setModalOpen(true)}
                 className="px-4 mr-4 mt-4 py-2 flex justify-center items-center text-green-600 rounded-xl text-2xl hover:bg-green-600 hover:text-white"
                 style={{ border: `1px solid green` }}
               >
@@ -119,10 +126,11 @@ const BookDetails = () => {
   return (
     <>
       <div>{content}</div>
-      {deleteShow && (
+      {modalOpen && (
         <DeleteBook
-          show={deleteShow}
-          handleClose={handleDeleteClose}
+          modalOpen={modalOpen}
+          // show={deleteShow}
+          // handleClose={handleDeleteClose}
           id={id!}
           book={book}
         />

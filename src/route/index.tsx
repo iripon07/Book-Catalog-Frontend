@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 import SignUp from "../pages/SignUp";
+import UpdateBook from "../pages/UpdateBook";
 
 const routes = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const routes = createBrowserRouter([
       {
         path: "/add-book",
         element: <AddNewBook />,
+      },
+      {
+        path: "/edit-book/:id",
+        element: <UpdateBook />,
       },
     ],
   },
