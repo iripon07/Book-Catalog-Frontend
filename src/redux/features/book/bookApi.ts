@@ -38,8 +38,8 @@ const bookApi = api.injectEndpoints({
     }),
 
     updateBook: build.mutation({
-      query: ({ id, data }: { id: string; data: IBookValues }) => ({
-        url: `edit-book/${id}`,
+      query: ({ data, id }) => ({
+        url: `books/${id}`,
         method: `PATCH`,
         body: data,
       }),
