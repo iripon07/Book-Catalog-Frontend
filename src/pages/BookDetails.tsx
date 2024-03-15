@@ -27,7 +27,6 @@ const BookDetails = () => {
       isSuccess: wishListSuccess,
     },
   ] = useAddBookToWishListMutation();
-  console.log(wishListData, wishListError, wishListLoading, wishListSuccess);
 
   // const [show, setShow] = useState(false);
   // const [deleteShow, setDeleteShow] = useState(false);
