@@ -3,10 +3,10 @@ import EditBookForm from "../component/EditBookForm"
 
 
 const UpdateBook = () => {
-    const {id} = useParams()
+    const {id} = useParams<{id:string}>()
   return (
     <div>
-        <EditBookForm id={id}/>
+      {id ? <EditBookForm id={id} /> : <div>No ID found</div>}
     </div>
   )
 }
